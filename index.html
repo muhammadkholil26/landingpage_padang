@@ -88,6 +88,27 @@
             color: #334155
         }
 
+        .nav-links a:not(.nav-cta) {
+            position: relative
+        }
+
+        .nav-links a:not(.nav-cta)::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -6px;
+            height: 2px;
+            background: #FACC15;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform .2s ease
+        }
+
+        .nav-links a.is-active::after {
+            transform: scaleX(1)
+        }
+
         .nav-links a:hover {
             color: var(--blue)
         }
@@ -492,6 +513,10 @@
                 padding: 13px 0
             }
 
+            .nav-links a:not(.nav-cta)::after {
+                bottom: 7px
+            }
+
             .nav-cta {
                 text-align: center;
                 margin-top: 8px
@@ -601,7 +626,7 @@
             <div class="cards" id="wisataGrid">
                 <article class="card" data-category="pantai" data-name="Pantai Air Manis Malin Kundang">
                     <div class="card-image"><img
-                            src="https://commons.wikimedia.org/wiki/Special:FilePath/Senja%20Keemasan%20di%20Air%20Manis.jpg"
+                            src="malinkundang.jpg"
                             alt="Pantai Air Manis Padang" loading="lazy"></div>
                     <div class="card-body"><span class="pill">WISATA PANTAI</span>
                         <h3>Pantai Air Manis</h3>
@@ -613,13 +638,13 @@
                 </article>
                 <article class="card" data-category="sejarah" data-name="Jembatan Siti Nurbaya Batang Arau">
                     <div class="card-image"><img
-                            src="https://commons.wikimedia.org/wiki/Special:FilePath/Jembatan%20Siti%20Nurbaya-1.jpg"
+                            src="sitinurbaya.jpg"
                             alt="Jembatan Siti Nurbaya Padang" loading="lazy"></div>
                     <div class="card-body"><span class="pill">IKON KOTA</span>
                         <h3>Jembatan Siti Nurbaya</h3>
                         <p>Jembatan ikonik di kawasan Batang Arau yang menjadi salah satu landmark Kota Padang.</p><a
                             class="card-link" target="_blank" rel="noopener"
-                            href="malinkundang.jpg">Lihat
+                            href="https://commons.wikimedia.org/wiki/File:Jembatan_Siti_Nurbaya.jpg?utm_source=chatgpt.com">Lihat
                             lokasi →</a>
                     </div>
                 </article>
@@ -671,6 +696,30 @@
                             lokasi →</a>
                     </div>
                 </article>
+                <article class="card" data-category="pantai" data-name="Bukit Gado-gado">
+                    <div class="card-image"><img
+                            src="paralayang.jpg"
+                            alt="Senja di Pantai Pasir Jambak" loading="lazy"></div>
+                    <div class="card-body"><span class="pill">WISATA BUKIT</span>
+                        <h3>Bukit Gado-Gado</h3>
+                        <p>Pesona alam dari ketinggian dengan panorama laut lepas dan keindahan Kota Padang. Bukit Gado-Gado menjadi tempat yang tepat untuk menikmati suasana tenang, berburu foto, dan menyaksikan matahari terbenam.</p><a
+                            class="card-link" target="_blank" rel="noopener"
+                            href="https://www.google.com/maps/search/?api=1&query=Bukit+Paralayang+Air+Manis+Padang&utm_source=chatgpt.com">Lihat
+                            lokasi →</a>
+                    </div>
+                </article>
+                 <article class="card" data-category="pantai" data-name="Stadion GOR Haji Agus Salim">
+                    <div class="card-image"><img
+                            src="Stadion-GOR-Haji-Agus-Salim.jpg"
+                            alt="Stadion GOR Haji Agus Salim" loading="lazy"></div>
+                    <div class="card-body"><span class="pill">WISATA BUKIT</span>
+                        <h3>Stadion GOR Haji Agus Salim</h3>
+                        <p>Stadion GOR Haji Agus Salim adalah fasilitas olahraga yang terletak di Kota Padang. Tempat ini menyediakan berbagai fasilitas untuk berbagai jenis olahraga.</p><a
+                            class="card-link" target="_blank" rel="noopener"
+                            href="https://www.google.com/maps/search/?api=1&query=Stadion+GOR+Haji+Agus+Salim+Padang&utm_source=chatgpt.com">Lihat
+                            lokasi →</a>
+                    </div>
+                </article>
             </div>
             <div class="empty" id="emptyWisata">Destinasi tidak ditemukan. Coba kata kunci lain.</div>
         </div>
@@ -703,7 +752,7 @@
                 </article>
                 <article class="card">
                     <div class="card-image"><img
-                            src="https://commons.wikimedia.org/wiki/Special:FilePath/Rendang%20Minangkabau.jpg"
+                            src="Rendang-padang.jpg"
                             alt="Rendang Minangkabau" loading="lazy"></div>
                     <div class="card-body"><span class="pill">IKON KULINER</span>
                         <h3>Rendang</h3>
@@ -765,6 +814,73 @@
     </footer>
     <script>
         const toggle = document.getElementById('menuToggle'), nav = document.getElementById('navLinks'); toggle.addEventListener('click', () => {const open = nav.classList.toggle('show'); toggle.textContent = open ? '×' : '☰'; toggle.setAttribute('aria-expanded', String(open));}); document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => {nav.classList.remove('show'); toggle.textContent = '☰'; toggle.setAttribute('aria-expanded', 'false');}));
+        const navSections = ['beranda', 'tentang', 'wisata', 'kuliner', 'budaya'].map(id => ({
+            section: document.getElementById(id),
+            link: nav.querySelector(`a[href="#${id}"]`)
+        }));
+        const navbar = document.querySelector('.navbar');
+        let scrollUpdateScheduled = false;
+        let requestedNavLink = null;
+        let pendingNavTimeout;
+
+        function setActiveNav(link) {
+            navSections.forEach(({link: sectionLink}) => {
+                const active = sectionLink === link;
+                sectionLink.classList.toggle('is-active', active);
+                if (active) sectionLink.setAttribute('aria-current', 'location');
+                else sectionLink.removeAttribute('aria-current');
+            });
+        }
+
+        function updateActiveNav() {
+            const activationLine = navbar.offsetHeight + window.innerHeight * 0.25;
+            if (requestedNavLink) {
+                const requestedSection = navSections.find(({link}) => link === requestedNavLink).section;
+                const bounds = requestedSection.getBoundingClientRect();
+                if (bounds.top <= activationLine && bounds.bottom > activationLine) requestedNavLink = null;
+                else {
+                    setActiveNav(requestedNavLink);
+                    scrollUpdateScheduled = false;
+                    return;
+                }
+            }
+
+            const activationPoint = window.scrollY + navbar.offsetHeight + window.innerHeight * 0.25;
+            let activeLink = navSections[0].link;
+
+            navSections.forEach(({section, link}) => {
+                if (section.getBoundingClientRect().top + window.scrollY <= activationPoint) activeLink = link;
+            });
+
+            setActiveNav(activeLink);
+            scrollUpdateScheduled = false;
+        }
+
+        function scheduleActiveNavUpdate() {
+            if (scrollUpdateScheduled) return;
+            scrollUpdateScheduled = true;
+            window.requestAnimationFrame(updateActiveNav);
+            if (requestedNavLink) {
+                window.clearTimeout(pendingNavTimeout);
+                pendingNavTimeout = window.setTimeout(() => {
+                    requestedNavLink = null;
+                    scheduleActiveNavUpdate();
+                }, 180);
+            }
+        }
+
+        function requestActiveNav(link) {
+            requestedNavLink = link;
+            setActiveNav(link);
+            scheduleActiveNavUpdate();
+        }
+
+        navSections.forEach(({link}) => link.addEventListener('click', () => requestActiveNav(link)));
+        nav.querySelector('.nav-cta').addEventListener('click', () => requestActiveNav(navSections[2].link));
+        window.addEventListener('scroll', scheduleActiveNavUpdate, {passive: true});
+        window.addEventListener('resize', scheduleActiveNavUpdate);
+        updateActiveNav();
+
         let activeFilter = 'semua'; const cards = [...document.querySelectorAll('#wisataGrid .card')], search = document.getElementById('searchWisata'); function applyFilter() {const q = search.value.toLowerCase().trim(); let count = 0; cards.forEach(card => {const category = card.dataset.category, name = card.dataset.name.toLowerCase(), text = card.innerText.toLowerCase(); const visible = (activeFilter === 'semua' || category === activeFilter) && (!q || name.includes(q) || text.includes(q)); card.style.display = visible ? 'block' : 'none'; if (visible) count++;}); document.getElementById('emptyWisata').style.display = count ? 'none' : 'block';} document.querySelectorAll('.filter-btn').forEach(btn => btn.addEventListener('click', () => {document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); activeFilter = btn.dataset.filter; applyFilter();})); search.addEventListener('input', applyFilter); document.getElementById('searchButton').addEventListener('click', applyFilter);
         document.querySelectorAll('img').forEach(img => img.addEventListener('error', () => {if (img.dataset.failed) return; img.dataset.failed = '1'; img.alt = img.alt + ' (foto tidak dapat dimuat; periksa koneksi internet)'; img.style.opacity = '.35';}));
     </script>
