@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Jelajahi wisata, kuliner, dan budaya Kota Padang, Sumatera Barat.">
+    <title>Pesona Padang | Jelajahi Kota Padang</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --navy: #082f49;
+            --blue: #075985;
+            --gold: #d6a84b;
+            --bg: #f8fafc;
+            --text: #172b3a;
+            --muted: #64748b
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text)
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+            background: rgba(255, 255, 255, .97);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 3px 20px #0f172a14
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 24px;
+            min-height: 76px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 800;
+            color: var(--blue);
+            white-space: nowrap
+        }
+
+        .logo span {
+            color: var(--gold)
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            list-style: none
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 700;
+            color: #334155
+        }
+
+        .nav-links a:hover {
+            color: var(--blue)
+        }
+
+        .nav-cta {
+            background: var(--blue);
+            color: white !important;
+            padding: 12px 18px;
+            border-radius: 8px
+        }
+
+        .menu-toggle {
+            display: none;
+            border: 0;
+            background: none;
+            font-size: 28px;
+            color: var(--blue)
+        }
+
+        .hero {
+            min-height: 630px;
+            display: flex;
+            align-items: center;
+            color: white;
+            background: linear-gradient(90deg, #03182ae8, #03182a55), url('https://commons.wikimedia.org/wiki/Special:FilePath/Pink%20Sunset%20at%20Padang%20Beach%2C%20West%20Sumatra%2C%20Indonesia.jpg') center/cover no-repeat
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            width: 100%;
+            margin: auto;
+            padding: 90px 24px
+        }
+
+        .hero-label {
+            display: inline-block;
+            color: #f6d58b;
+            border: 1px solid #f6d58b99;
+            border-radius: 50px;
+            padding: 9px 17px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            margin-bottom: 25px
+        }
+
+        .hero h1 {
+            max-width: 760px;
+            font: 800 clamp(42px, 6vw, 72px)/1.12 'Playfair Display', serif;
+            margin-bottom: 24px
+        }
+
+        .hero h1 span {
+            color: #f5d18a
+        }
+
+        .hero p {
+            max-width: 600px;
+            color: #e2e8f0;
+            line-height: 1.8;
+            margin-bottom: 32px
+        }
+
+        .btn {
+            display: inline-flex;
+            padding: 14px 22px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 800;
+            transition: .2s
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: #172b3a
+        }
+
+        .btn-primary:hover {
+            background: #edc46f;
+            transform: translateY(-2px)
+        }
+
+        .btn-outline {
+            border: 1px solid white;
+            color: white;
+            margin-left: 8px
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--blue)
+        }
+
+        .section {
+            padding: 82px 24px
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto
+        }
+
+        .heading {
+            max-width: 680px;
+            margin-bottom: 38px
+        }
+
+        .tag {
+            color: var(--blue);
+            font-size: 12px;
+            letter-spacing: 2px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 12px
+        }
+
+        .heading h2,
+        .intro h2 {
+            font: 700 clamp(30px, 4vw, 43px)/1.2 'Playfair Display', serif;
+            color: var(--navy);
+            margin-bottom: 14px
+        }
+
+        .heading p,
+        .intro p {
+            color: var(--muted);
+            line-height: 1.85;
+            font-size: 15px
+        }
+
+        .intro-grid,
+        .culture-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center
+        }
+
+        .photo {
+            width: 100%;
+            height: 390px;
+            object-fit: cover;
+            border-radius: 15px;
+            background: #e2e8f0
+        }
+
+        .intro p {
+            margin-bottom: 14px
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            max-width: 480px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 8px 12px;
+            margin-bottom: 22px
+        }
+
+        .search-box input {
+            flex: 1;
+            min-width: 0;
+            border: 0;
+            outline: 0;
+            padding: 10px
+        }
+
+        .search-box button {
+            border: 0;
+            background: var(--blue);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 7px
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 28px
+        }
+
+        .filter-btn {
+            padding: 10px 18px;
+            border: 1px solid #dbe3eb;
+            background: white;
+            color: #475569;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--blue);
+            color: white;
+            border-color: var(--blue)
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px
+        }
+
+        .card {
+            background: white;
+            border-radius: 13px;
+            overflow: hidden;
+            box-shadow: 0 5px 22px #0f172a0f;
+            transition: .25s
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 30px #0f172a1c
+        }
+
+        .card-image {
+            height: 225px;
+            background: #e2e8f0;
+            overflow: hidden
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: .35s
+        }
+
+        .card:hover img {
+            transform: scale(1.05)
+        }
+
+        .card-body {
+            padding: 22px
+        }
+
+        .pill {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--blue);
+            background: #e0f2fe;
+            padding: 6px 10px;
+            border-radius: 30px;
+            margin-bottom: 12px
+        }
+
+        .card h3 {
+            font-size: 19px;
+            color: var(--navy);
+            margin-bottom: 9px
+        }
+
+        .card p {
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--muted)
+        }
+
+        .card-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--blue);
+            font-size: 13px;
+            font-weight: 800
+        }
+
+        .empty {
+            display: none;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            color: var(--muted);
+            margin-top: 18px
+        }
+
+        .culture {
+            background: var(--navy);
+            color: white
+        }
+
+        .culture .heading h2 {
+            color: white
+        }
+
+        .culture .heading p,
+        .culture p {
+            color: #cbd5e1
+        }
+
+        .culture h3 {
+            font: 700 29px 'Playfair Display', serif;
+            margin-bottom: 15px
+        }
+
+        .culture p {
+            line-height: 1.9;
+            margin-bottom: 14px
+        }
+
+        .cta {
+            padding: 75px 24px;
+            text-align: center;
+            background: #eaf4f8
+        }
+
+        .cta h2 {
+            font: 700 36px 'Playfair Display', serif;
+            color: var(--navy);
+            margin-bottom: 14px
+        }
+
+        .cta p {
+            color: var(--muted);
+            margin-bottom: 24px
+        }
+
+        footer {
+            background: #061f32;
+            color: white;
+            padding: 50px 24px 22px
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            padding-bottom: 30px
+        }
+
+        .footer-brand h3 {
+            color: #f5d18a;
+            font-size: 24px;
+            margin-bottom: 12px
+        }
+
+        .footer-brand p,
+        .footer-links a {
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.9
+        }
+
+        .footer-links h4 {
+            margin-bottom: 12px
+        }
+
+        .footer-links a {
+            display: block;
+            margin-bottom: 7px
+        }
+
+        .copyright {
+            max-width: 1200px;
+            margin: auto;
+            border-top: 1px solid #ffffff26;
+            padding-top: 18px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px
+        }
+
+        .credit {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 8px
+        }
+
+        @media(max-width:850px) {
+            .menu-toggle {
+                display: block
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                box-shadow: 0 12px 18px #0f172a1a;
+                padding: 10px 24px 20px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0
+            }
+
+            .nav-links.show {
+                display: flex
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 13px 0
+            }
+
+            .nav-cta {
+                text-align: center;
+                margin-top: 8px
+            }
+
+            .intro-grid,
+            .culture-grid {
+                grid-template-columns: 1fr
+            }
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media(max-width:560px) {
+            .section {
+                padding: 60px 18px
+            }
+
+            .hero {
+                min-height: 540px
+            }
+
+            .hero-content {
+                padding: 65px 20px
+            }
+
+            .hero h1 {
+                font-size: 43px
+            }
+
+            .cards {
+                grid-template-columns: 1fr
+            }
+
+            .photo {
+                height: 270px
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 24px
+            }
+
+            .cta h2 {
+                font-size: 29px
+            }
+
+            .btn-outline {
+                margin: 10px 0 0
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="nav-container"><a class="logo" href="#beranda">PESONA<span>PADANG.</span></a><button
+                class="menu-toggle" id="menuToggle" aria-label="Buka menu" aria-expanded="false">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#beranda">Beranda</a></li>
+                <li><a href="#tentang">Tentang</a></li>
+                <li><a href="#wisata">Wisata</a></li>
+                <li><a href="#kuliner">Kuliner</a></li>
+                <li><a href="#budaya">Budaya</a></li>
+                <li><a class="nav-cta" href="#wisata">Jelajahi Padang</a></li>
+            </ul>
+        </div>
+    </header>
+    <section class="hero" id="beranda">
+        <div class="hero-content"><span class="hero-label">SELAMAT DATANG DI KOTA PADANG</span>
+            <h1>Temukan Pesona <span>Kota Padang</span></h1>
+            <p>Jelajahi pantai yang memesona, warisan budaya Minangkabau, dan cita rasa kuliner khas Sumatera Barat
+                dalam satu perjalanan.</p><a class="btn btn-primary" href="#wisata">Jelajahi Wisata</a><a
+                class="btn btn-outline" href="#tentang">Kenali Padang</a>
+        </div>
+    </section>
+    <section class="section" id="tentang">
+        <div class="container intro-grid"><img class="photo"
+                src="https://commons.wikimedia.org/wiki/Special:FilePath/Senja%20Keemasan%20di%20Air%20Manis.jpg"
+                alt="Suasana senja Pantai Air Manis Padang" loading="lazy">
+            <div class="intro">
+                <div class="tag">Mengenal Padang</div>
+                <h2>Keindahan Alam dan Budaya dalam Satu Kota</h2>
+                <p>Kota Padang, ibu kota Sumatera Barat, dikenal dengan garis pantai Samudra Hindia, kawasan bersejarah,
+                    serta tradisi Minangkabau yang kuat.</p>
+                <p>Dari Pantai Air Manis hingga kawasan Batang Arau, Padang menawarkan pengalaman wisata alam, sejarah,
+                    dan kuliner yang beragam.</p><a class="btn btn-primary" href="#wisata">Lihat Destinasi</a>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="wisata" style="background:#f1f5f9">
+        <div class="container">
+            <div class="heading">
+                <div class="tag">Destinasi pilihan</div>
+                <h2>Jelajahi Wisata Kota Padang</h2>
+                <p>Foto-foto berikut menggunakan dokumentasi lokasi di Padang dari Wikimedia Commons. Beberapa foto
+                    dapat dibuka pada sumber aslinya.</p>
+            </div>
+            <div class="search-box"><input id="searchWisata" type="search" placeholder="Cari tempat wisata..."><button
+                    id="searchButton">Cari</button></div>
+            <div class="filters"><button class="filter-btn active" data-filter="semua">Semua</button><button
+                    class="filter-btn" data-filter="pantai">Pantai</button><button class="filter-btn"
+                    data-filter="sejarah">Sejarah</button><button class="filter-btn" data-filter="alam">Alam</button>
+            </div>
+            <div class="cards" id="wisataGrid">
+                <article class="card" data-category="pantai" data-name="Pantai Air Manis Malin Kundang">
+                    <div class="card-image"><img
+                            src="https://commons.wikimedia.org/wiki/Special:FilePath/Senja%20Keemasan%20di%20Air%20Manis.jpg"
+                            alt="Pantai Air Manis Padang" loading="lazy"></div>
+                    <div class="card-body"><span class="pill">WISATA PANTAI</span>
+                        <h3>Pantai Air Manis</h3>
+                        <p>Pantai yang dikenal dengan legenda Malin Kundang dan panorama pesisir di selatan Kota Padang.
+                        </p><a class="card-link" target="_blank" rel="noopener"
+                            href="https://www.google.com/maps/search/?api=1&query=Pantai+Air+Manis+Padang">Lihat lokasi
+                            →</a>
+                    </div>
+                </article>
+                <article class="card" data-category="sejarah" data-name="Jembatan Siti Nurbaya Batang Arau">
+                    <div class="card-image"><img
+                            src="https://commons.wikimedia.org/wiki/Special:FilePath/Jembatan%20Siti%20Nurbaya-1.jpg"
+                            alt="Jembatan Siti Nurbaya Padang" loading="lazy"></div>
+                    <div class="card-body"><span class="pill">IKON KOTA</span>
+                        <h3>Jembatan Siti Nurbaya</h3>
+                        <p>Jembatan ikonik di kawasan Batang Arau yang menjadi salah satu landmark Kota Padang.</p><a
+                            class="card-link" target="_blank" rel="noopener"
+                            href="malinkundang.jpg">Lihat
+                            lokasi →</a>
+                    </div>
+                </article>
+                <article class="card" data-category="sejarah" data-name="Museum Adityawarman Rumah Gadang">
+                    <div class="card-image"><img
+                            src="https://commons.wikimedia.org/wiki/Special:FilePath/Museum%20Adityawarman.jpg"
+                            alt="Museum Adityawarman Padang" loading="lazy"></div>
+                    <div class="card-body"><span class="pill">WISATA SEJARAH</span>
+                        <h3>Museum Adityawarman</h3>
+                        <p>Museum budaya Sumatera Barat dengan bangunan bergaya Rumah Gadang dan koleksi sejarah
+                            Minangkabau.</p><a class="card-link" target="_blank" rel="noopener"
+                            href="https://www.google.com/maps/search/?api=1&query=Museum+Adityawarman+Padang">Lihat
+                            lokasi →</a>
+                    </div>
+                </article>
+                <article class="card" data-category="pantai" data-name="Pantai Padang Taplau">
+                    <div class="card-image"><img
+                            src="https://commons.wikimedia.org/wiki/Special:FilePath/Pink%20Sunset%20at%20Padang%20Beach%2C%20West%20Sumatra%2C%20Indonesia.jpg"
+                            alt="Senja di Pantai Padang" loading="lazy"></div>
+                    <div class="card-body"><span class="pill">WISATA PANTAI</span>
+                        <h3>Pantai Padang (Taplau)</h3>
+                        <p>Kawasan tepi laut yang populer untuk menikmati suasana sore dan pemandangan matahari
+                            terbenam.</p><a class="card-link" target="_blank" rel="noopener"
+                            href="https://www.google.com/maps/search/?api=1&query=Pantai+Padang+Taplau">Lihat lokasi
+                            →</a>
+                    </div>
+                </article>
+                <article class="card" data-category="alam" data-name="Gunung Padang panorama">
+                    <div class="card-image"><img
+                            src="https://commons.wikimedia.org/wiki/Special:FilePath/Ombak%20di%20Pantai%20Padang%20dengan%20latar%20Gunung%20Padang.jpg"
+                            alt="Pemandangan pesisir dengan latar Gunung Padang" loading="lazy"></div>
+                    <div class="card-body"><span class="pill">WISATA ALAM</span>
+                        <h3>Gunung Padang</h3>
+                        <p>Kawasan bukit yang menawarkan sudut pandang ke arah pesisir dan kawasan Kota Padang.</p><a
+                            class="card-link" target="_blank" rel="noopener"
+                            href="https://www.google.com/maps/search/?api=1&query=Gunung+Padang+Sumatera+Barat">Lihat
+                            lokasi →</a>
+                    </div>
+                </article>
+                <article class="card" data-category="pantai" data-name="Pantai Pasir Jambak">
+                    <div class="card-image"><img
+                            src="https://commons.wikimedia.org/wiki/Special:FilePath/Senja%20Pantai%20Jambak.jpg"
+                            alt="Senja di Pantai Pasir Jambak" loading="lazy"></div>
+                    <div class="card-body"><span class="pill">WISATA PANTAI</span>
+                        <h3>Pantai Pasir Jambak</h3>
+                        <p>Pantai di wilayah utara Padang dengan garis pantai luas dan suasana santai.</p><a
+                            class="card-link" target="_blank" rel="noopener"
+                            href="https://www.google.com/maps/search/?api=1&query=Pantai+Pasir+Jambak+Padang">Lihat
+                            lokasi →</a>
+                    </div>
+                </article>
+            </div>
+            <div class="empty" id="emptyWisata">Destinasi tidak ditemukan. Coba kata kunci lain.</div>
+        </div>
+    </section>
+    <section class="section" id="kuliner">
+        <div class="container">
+            <div class="heading">
+                <div class="tag">Cita rasa Minangkabau</div>
+                <h2>Kuliner Khas Padang</h2>
+                <p>Kenali makanan dan jajanan yang lekat dengan keseharian masyarakat Padang.</p>
+            </div>
+            <div class="cards">
+                <article class="card">
+                    <div class="card-image"><img
+                            src="https://commons.wikimedia.org/wiki/Special:FilePath/Pical%20Lontong%20Padang.jpg"
+                            alt="Pical lontong Padang" loading="lazy"></div>
+                    <div class="card-body"><span class="pill">KULINER TRADISIONAL</span>
+                        <h3>Pical Lontong</h3>
+                        <p>Hidangan lontong dengan sayuran dan siraman bumbu kacang khas Minang.</p>
+                    </div>
+                </article>
+                <article class="card">
+                    <div class="card-image"><img
+                            src="https://commons.wikimedia.org/wiki/Special:FilePath/Pisang%20Bakar%20Taplau.jpg"
+                            alt="Pisang bakar di Taplau Padang" loading="lazy"></div>
+                    <div class="card-body"><span class="pill">JAJANAN PESISIR</span>
+                        <h3>Pisang Bakar Taplau</h3>
+                        <p>Salah satu jajanan yang dapat dijumpai saat menikmati suasana Pantai Padang.</p>
+                    </div>
+                </article>
+                <article class="card">
+                    <div class="card-image"><img
+                            src="https://commons.wikimedia.org/wiki/Special:FilePath/Rendang%20Minangkabau.jpg"
+                            alt="Rendang Minangkabau" loading="lazy"></div>
+                    <div class="card-body"><span class="pill">IKON KULINER</span>
+                        <h3>Rendang</h3>
+                        <p>Masakan daging berbumbu rempah yang menjadi salah satu ikon kuliner Minangkabau.</p>
+                    </div>
+                </article>
+            </div>
+            <p class="credit">Foto kuliner yang tersedia di Commons digunakan sebagai ilustrasi; periksa keterangan dan
+                lisensi tiap foto sebelum publikasi.</p>
+        </div>
+    </section>
+    <section class="section culture" id="budaya">
+        <div class="container">
+            <div class="heading">
+                <div class="tag" style="color:#f5d18a">Warisan Nusantara</div>
+                <h2>Mengenal Budaya Minangkabau</h2>
+                <p>Kekayaan adat, arsitektur, dan tradisi yang menjadi identitas masyarakat Sumatera Barat.</p>
+            </div>
+            <div class="culture-grid"><img class="photo"
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Rumah%20Gadang%20Museum%20Aditiyawarman.jpg"
+                    alt="Rumah Gadang di Museum Adityawarman" loading="lazy">
+                <div>
+                    <h3>Adat, Tradisi, dan Filosofi Minangkabau</h3>
+                    <p>Rumah Gadang dikenal melalui bentuk atap gonjong yang khas. Arsitektur ini menjadi salah satu
+                        simbol budaya Minangkabau dan dapat dilihat di Museum Adityawarman.</p>
+                    <p>Falsafah masyarakat Minangkabau dikenal melalui prinsip “Adat Basandi Syarak, Syarak Basandi
+                        Kitabullah”.</p><a class="btn btn-primary"
+                        href="https://commons.wikimedia.org/wiki/Category:Minangkabau_architecture" target="_blank"
+                        rel="noopener">Lihat budaya Minangkabau</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="cta">
+        <div class="container">
+            <h2>Sudah Siap Menjelajahi Padang?</h2>
+            <p>Temukan destinasi, kuliner, dan budaya yang membuat Padang istimewa.</p><a class="btn btn-primary"
+                href="#wisata">Mulai Jelajahi</a>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>PESONA PADANG.</h3>
+                <p>Media informasi wisata Kota Padang yang memperkenalkan destinasi, kuliner, dan budaya Minangkabau.
+                </p>
+            </div>
+            <div class="footer-links">
+                <h4>Navigasi</h4><a href="#beranda">Beranda</a><a href="#tentang">Tentang Padang</a><a
+                    href="#wisata">Wisata</a><a href="#kuliner">Kuliner</a>
+            </div>
+            <div class="footer-links">
+                <h4>Jelajahi</h4><a href="#budaya">Budaya Minang</a><a target="_blank" rel="noopener"
+                    href="https://www.google.com/maps/search/?api=1&query=Kota+Padang">Peta Kota Padang</a>
+            </div>
+        </div>
+        <div class="copyright">© 2026 Pesona Padang. Foto dari Wikimedia Commons, lisensi mengikuti masing-masing
+            berkas.</div>
+    </footer>
+    <script>
+        const toggle = document.getElementById('menuToggle'), nav = document.getElementById('navLinks'); toggle.addEventListener('click', () => {const open = nav.classList.toggle('show'); toggle.textContent = open ? '×' : '☰'; toggle.setAttribute('aria-expanded', String(open));}); document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => {nav.classList.remove('show'); toggle.textContent = '☰'; toggle.setAttribute('aria-expanded', 'false');}));
+        let activeFilter = 'semua'; const cards = [...document.querySelectorAll('#wisataGrid .card')], search = document.getElementById('searchWisata'); function applyFilter() {const q = search.value.toLowerCase().trim(); let count = 0; cards.forEach(card => {const category = card.dataset.category, name = card.dataset.name.toLowerCase(), text = card.innerText.toLowerCase(); const visible = (activeFilter === 'semua' || category === activeFilter) && (!q || name.includes(q) || text.includes(q)); card.style.display = visible ? 'block' : 'none'; if (visible) count++;}); document.getElementById('emptyWisata').style.display = count ? 'none' : 'block';} document.querySelectorAll('.filter-btn').forEach(btn => btn.addEventListener('click', () => {document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); activeFilter = btn.dataset.filter; applyFilter();})); search.addEventListener('input', applyFilter); document.getElementById('searchButton').addEventListener('click', applyFilter);
+        document.querySelectorAll('img').forEach(img => img.addEventListener('error', () => {if (img.dataset.failed) return; img.dataset.failed = '1'; img.alt = img.alt + ' (foto tidak dapat dimuat; periksa koneksi internet)'; img.style.opacity = '.35';}));
+    </script>
+</body>
+
+</html>
